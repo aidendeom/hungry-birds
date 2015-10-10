@@ -30,6 +30,30 @@ namespace hungry_birds
             _headerString = GetHeaderString();
         }
 
+        public void SetCell(int row, int col, char c)
+        {
+            if (!IsValidPosition(row, col))
+                return;
+
+            _data[row * NUM_COLS + col] = c;
+        }
+
+        public char GetCell(int row, int col)
+        {
+            if (!IsValidPosition(row, col))
+                return '\0';
+
+            return _data[row * NUM_COLS + col];
+        }
+
+        public bool IsValidPosition(int row, int col)
+        {
+            return row >= 0
+                && row < NUM_ROWS
+                && col >= 0
+                && col < NUM_COLS;
+        }
+
         /// <summary>
         /// Get a string representation of the board.
         /// </summary>
