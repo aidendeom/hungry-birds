@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Driver.cs" />
+    <Compile Include="GamePiece.cs" />
+    <Compile Include="Move.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

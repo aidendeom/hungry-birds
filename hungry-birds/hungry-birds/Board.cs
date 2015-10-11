@@ -9,7 +9,7 @@ namespace hungry_birds
     /// <summary>
     /// Class to represent a board in the game of Hungry Birds
     /// </summary>
-    class Board
+    public class Board
     {
         public const int NUM_ROWS = 8;
         public const int NUM_COLS = 8;
