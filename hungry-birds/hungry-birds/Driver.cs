@@ -3,77 +3,49 @@ using hungry_birds;
 
 class Driver
 {
-    class Larva
-    {
-        public int row = 6;
-        public int col = 3;
-
-        public int lrow = 6;
-        public int lcol = 3;
-    }
-
     static Board b = new Board();
-    static Larva l = new Larva();
-    static char full = 'l';
-    static char empty = ' ';
+    static Larva l = new Larva(6, 3, b);
 
     public static void Main(string[] args)
     {
-        UpdateBoard();
+        b.SetCell(l.Pos, 'l');
         UpdateScreen();
         var key = Console.ReadKey(false);
         while (key.Key != ConsoleKey.Escape)
         {
-            Move(key);
-            UpdateBoard();
-            UpdateScreen();
+            try
+            {
+                var dir = GetMoveDir(key);
+                l.Move(dir);
+                UpdateScreen();
+            }
+            catch (ArgumentException) { }
+
             key = Console.ReadKey(false);
+
         }
     }
 
-    static void UpdateBoard()
-    {
-        b.SetCell(l.lrow, l.lcol, empty);
-        b.SetCell(l.row, l.col, full);
-    }
-
-    static void UpdateScreen()
+    private static void UpdateScreen()
     {
         Console.Clear();
-        Console.WriteLine(b.ToString());
+        Console.WriteLine(b);
     }
 
-    static void Move(ConsoleKeyInfo key)
+    private static MoveDirection GetMoveDir(ConsoleKeyInfo key)
     {
-        int r = l.row;
-        int c = l.col;
-
         switch (key.Key)
         {
-            case ConsoleKey.UpArrow:
-                r--;
-                break;
-            case ConsoleKey.DownArrow:
-                r++;
-                break;
-            case ConsoleKey.LeftArrow:
-                c--;
-                break;
-            case ConsoleKey.RightArrow:
-                c++;
-                break;
+            case ConsoleKey.Q:
+                return MoveDirection.UpLeft;
+            case ConsoleKey.W:
+                return MoveDirection.UpRight;
+            case ConsoleKey.A:
+                return MoveDirection.DownLeft;
+            case ConsoleKey.S:
+                return MoveDirection.DownRight;
             default:
-                return;
-        }
-
-        if (b.IsValidPosition(r, c))
-        {
-            l.lrow = l.row;
-            l.lcol = l.col;
-
-            l.row = r;
-            l.col = c;
-            UpdateBoard();
+                throw new ArgumentException();
         }
     }
 }

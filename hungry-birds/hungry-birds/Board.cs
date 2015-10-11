@@ -30,28 +30,32 @@ namespace hungry_birds
             _headerString = GetHeaderString();
         }
 
-        public void SetCell(int row, int col, char c)
+        public void SetCell(Position p, char c)
         {
-            if (!IsValidPosition(row, col))
+            if (!IsPositionInMap(p))
                 return;
 
-            _data[row * NUM_COLS + col] = c;
+            _data[p.Row * NUM_COLS + p.Col] = c;
         }
 
-        public char GetCell(int row, int col)
+        public char GetCell(Position p)
         {
-            if (!IsValidPosition(row, col))
+            if (!IsPositionInMap(p))
                 return '\0';
 
-            return _data[row * NUM_COLS + col];
+            return _data[p.Row * NUM_COLS + p.Col];
         }
 
-        public bool IsValidPosition(int row, int col)
+        public bool IsValidPosition(Position pos)
         {
-            return row >= 0
-                && row < NUM_ROWS
-                && col >= 0
-                && col < NUM_COLS;
+            return IsPositionInMap(pos);
+        }
+
+        public void Move(Move m)
+        {
+            var cell = GetCell(m.From);
+            SetCell(m.From, ' ');
+            SetCell(m.To, cell);
         }
 
         /// <summary>
@@ -133,6 +137,14 @@ namespace hungry_birds
             }
 
             return sb.ToString();
+        }
+
+        private bool IsPositionInMap(Position p)
+        {
+            return p.Row >= 0
+                && p.Row < NUM_ROWS
+                && p.Col >= 0
+                && p.Col < NUM_COLS;
         }
     }
 }
