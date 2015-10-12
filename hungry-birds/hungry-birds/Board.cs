@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace hungry_birds
 {
@@ -14,11 +10,16 @@ namespace hungry_birds
         public const int NUM_ROWS = 8;
         public const int NUM_COLS = 8;
         public const int NUM_CELLS = NUM_ROWS * NUM_COLS;
+        public const int NUM_BIRDS = 4;
 
         readonly string _rowSeperator;
         readonly string _headerString;
+        public readonly Position INITIA_LARVA_POS = new Position(6, 3);
 
         char[] _data = new char[NUM_ROWS * NUM_COLS];
+
+        public Larva Larva { get; private set; }
+        public GamePiece[] Birds { get; private set; }
 
         /// <summary>
         /// Create an empty board
@@ -28,6 +29,9 @@ namespace hungry_birds
             EmptyBoard();
             _rowSeperator = GetRowSeperator();
             _headerString = GetHeaderString();
+
+            Larva = new Larva(INITIA_LARVA_POS, this);
+            SetCell(Larva.Pos, 'l');
         }
 
         public void SetCell(Position p, char c)

@@ -4,11 +4,11 @@ using hungry_birds;
 class Driver
 {
     static Board b = new Board();
-    static Larva l = new Larva(6, 3, b);
+    static Larva l;
 
     public static void Main(string[] args)
     {
-        b.SetCell(l.Pos, 'l');
+        l = b.Larva;
         UpdateScreen();
         var key = Console.ReadKey(false);
         while (key.Key != ConsoleKey.Escape)
