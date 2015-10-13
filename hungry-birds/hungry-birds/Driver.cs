@@ -19,7 +19,18 @@ class Driver
                 l.Move(dir);
                 UpdateScreen();
             }
-            catch (ArgumentException) { }
+            catch (ArgumentException) { Console.Beep(); }
+            catch (InvalidMoveException e)
+            {
+                while (Console.KeyAvailable) Console.ReadKey(true);
+                int totalRows = Board.NUM_ROWS * 2 + 3;
+                Console.SetCursorPosition(0, totalRows);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, totalRows);
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.Message);
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
 
             key = Console.ReadKey(false);
 

@@ -15,8 +15,15 @@ namespace hungry_birds
         readonly string _rowSeperator;
         readonly string _headerString;
         public readonly Position INITIA_LARVA_POS = new Position(6, 3);
+        public readonly Position[] INITAL_BIRD_POS =
+        {
+            new Position(7, 0),
+            new Position(7, 2),
+            new Position(7, 4),
+            new Position(7, 6)
+        };
 
-        char[] _data = new char[NUM_ROWS * NUM_COLS];
+        GamePiece[] _data = new GamePiece[NUM_ROWS * NUM_COLS];
 
         public Larva Larva { get; private set; }
         public GamePiece[] Birds { get; private set; }
@@ -31,23 +38,32 @@ namespace hungry_birds
             _headerString = GetHeaderString();
 
             Larva = new Larva(INITIA_LARVA_POS, this);
-            SetCell(Larva.Pos, 'l');
+            SetCell(Larva.Pos, Larva);
+
+            Birds = new GamePiece[NUM_BIRDS];
+            for (int i = 0; i < NUM_BIRDS; i++)
+            {
+                Position pos = INITAL_BIRD_POS[i];
+                char representation = (char)('0' + i + 1);
+                Birds[i] = new Bird(pos, this, representation);
+                SetCell(pos, Birds[i]);
+            }
         }
 
-        public void SetCell(Position p, char c)
+        public void SetCell(Position pos, GamePiece piece)
         {
-            if (!IsPositionInMap(p))
+            if (!IsPositionInMap(pos))
                 return;
 
-            _data[p.Row * NUM_COLS + p.Col] = c;
+            _data[pos.Row * NUM_COLS + pos.Col] = piece;
         }
 
-        public char GetCell(Position p)
+        public GamePiece GetCell(Position pos)
         {
-            if (!IsPositionInMap(p))
-                return '\0';
+            if (!IsPositionInMap(pos))
+                return null;
 
-            return _data[p.Row * NUM_COLS + p.Col];
+            return _data[pos.Row * NUM_COLS + pos.Col];
         }
 
         public bool IsValidPosition(Position pos)
@@ -58,7 +74,7 @@ namespace hungry_birds
         public void Move(Move m)
         {
             var cell = GetCell(m.From);
-            SetCell(m.From, ' ');
+            SetCell(m.From, null);
             SetCell(m.To, cell);
         }
 
@@ -82,7 +98,9 @@ namespace hungry_birds
                 
                 for (int j = 0; j < NUM_COLS; j++)
                 {
-                    sb.Append(_data[i * NUM_COLS + j]);
+                    GamePiece p = _data[i * NUM_COLS + j];
+                    char rep = p != null ? p.CharRepresentation : ' ';
+                    sb.Append(rep);
                     sb.Append('|');
                 }
 
@@ -100,7 +118,7 @@ namespace hungry_birds
         {
             for (int i = 0; i < NUM_CELLS; i++)
             {
-                _data[i] = ' ';
+                _data[i] = null;
             }
         }
 

@@ -1,14 +1,21 @@
-﻿namespace hungry_birds
+﻿using System;
+
+namespace hungry_birds
 {
     public class Larva : GamePiece
     {
+        /// <summary>
+        /// Character representation of a Larva
+        /// </summary>
+        public override char CharRepresentation => 'L';
+
         /// <summary>
         /// Create a new Larva peice on Board b at Position p
         /// </summary>
         /// <param name="p">Position at which to place the Larva</param>
         /// <param name="b">Board on which to place the Larva</param>
-        public Larva(Position p, Board b)
-            : base(p.Row, p.Col, b)
+        public Larva(Position pos, Board b)
+            : base(pos, b)
         { }
 
         /// <summary>
@@ -36,12 +43,12 @@
                     to = new Position(Pos.Row + 1, Pos.Col + 1);
                     break;
                 default: // Should cover all cases
-                    throw new InvalidMoveException($"Direction {dir} is not allowed for Larva");
+                    throw new InvalidMoveException(dir);
             }
 
             // Check of the new coordinate is on the board
             if (!_board.IsValidPosition(to))
-                throw new InvalidMoveException($"Cannot move in direction {dir}");
+                throw new InvalidMoveException(dir);
 
             // Create a move representing this move
             Move m = new Move(Pos, to);

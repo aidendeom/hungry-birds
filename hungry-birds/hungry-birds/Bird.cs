@@ -4,9 +4,19 @@ namespace hungry_birds
 {
     public class Bird : GamePiece
     {
-        public Bird(Position p, Board b) :
-            base(p.Row, p.Col, b)
-        { }
+        // Allow for different representations to differentiate on the board;
+        private char _representation = 'B';
+
+        /// <summary>
+        /// Character representation of a Bird
+        /// </summary>
+        public override char CharRepresentation => _representation;
+
+        public Bird(Position pos, Board b, char representation)
+            : base(pos, b)
+        {
+            _representation = representation;
+        }
 
         public override void Move(MoveDirection dir)
         {
@@ -21,12 +31,12 @@ namespace hungry_birds
                     to = new Position(Pos.Row - 1, Pos.Col + 1);
                     break;
                 default: // Should cover all cases
-                    throw new InvalidMoveException($"Direction {dir} is not allowed for Larva");
+                    throw new InvalidMoveException(dir);
             }
 
             // Check of the new coordinate is on the board
             if (!_board.IsValidPosition(to))
-                throw new InvalidMoveException($"Cannot move in direction {dir}");
+                throw new InvalidMoveException(dir);
 
             // Create a move representing this move
             Move m = new Move(Pos, to);
