@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace hungry_birds
+﻿namespace hungry_birds
 {
     /// <summary>
     /// Struct to represent a position on a board
