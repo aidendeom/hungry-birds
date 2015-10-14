@@ -26,7 +26,7 @@ namespace hungry_birds
         GamePiece[] _data = new GamePiece[NUM_ROWS * NUM_COLS];
 
         public Larva Larva { get; private set; }
-        public GamePiece[] Birds { get; private set; }
+        public Bird[] Birds { get; private set; }
 
         /// <summary>
         /// Create an empty board
@@ -40,7 +40,7 @@ namespace hungry_birds
             Larva = new Larva(INITIA_LARVA_POS, this);
             SetCell(Larva.Pos, Larva);
 
-            Birds = new GamePiece[NUM_BIRDS];
+            Birds = new Bird[NUM_BIRDS];
             for (int i = 0; i < NUM_BIRDS; i++)
             {
                 Position pos = INITAL_BIRD_POS[i];

@@ -46,6 +46,7 @@
     <Compile Include="Bird.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Driver.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="GamePiece.cs" />
     <Compile Include="InvalidMoveException.cs" />
     <Compile Include="Larva.cs" />
