@@ -18,46 +18,20 @@ namespace hungry_birds
             : base(pos, b)
         { }
 
-        /// <summary>
-        /// Attempt to move the Larva in the provided direction.
-        /// Move will fail if the calculated position is not on the board,
-        /// or if it is not a valid move.
-        /// </summary>
-        /// <param name="dir"></param>
-        public override void Move(MoveDirection dir)
+        public override void Move(Move move)
         {
-            // Get the new coordinate based on direction
-            Position to;
-            switch (dir)
-            {
-                case MoveDirection.UpLeft:
-                    to = new Position(Pos.Row - 1, Pos.Col - 1);
-                    break;
-                case MoveDirection.UpRight:
-                    to = new Position(Pos.Row - 1, Pos.Col + 1);
-                    break;
-                case MoveDirection.DownLeft:
-                    to = new Position(Pos.Row + 1, Pos.Col - 1);
-                    break;
-                case MoveDirection.DownRight:
-                    to = new Position(Pos.Row + 1, Pos.Col + 1);
-                    break;
-                default: // Should cover all cases
-                    throw new InvalidMoveException(dir);
-            }
+            if (!IsValidMove(move))
+                throw new InvalidMoveException();
 
-            // Check of the new coordinate is on the board
-            if (!_board.IsValidPosition(to))
-                throw new InvalidMoveException(dir);
+            _board.Move(move);
 
-            // Create a move representing this move
-            Move m = new Move(Pos, to);
+            Pos = move.To;
+        }
 
-            // Perform the move
-            _board.Move(m);
-
-            // Update this peice's position
-            Pos = to;
+        protected override bool IsValidMove(Move move)
+        {
+            return _board.IsValidPosition(move.To)
+                && _board.IsCellEmpty(move.To);
         }
     }
 }

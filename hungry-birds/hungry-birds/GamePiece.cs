@@ -28,9 +28,17 @@
         }
 
         /// <summary>
-        /// Method to move the GamePiece. Logic should be implemented in child classes
+        /// Method to move the GamePiece. Logic should be implemented in child
+        /// classes
         /// </summary>
-        /// <param name="dir">Direction in which to move</param>
-        public abstract void Move(MoveDirection dir);
+        /// <param name="dir">Move for piece to make</param>
+        public abstract void Move(Move move);
+
+        /// <summary>
+        /// Check if the given move is valid
+        /// </summary>
+        /// <param name="move">Move to check</param>
+        /// <returns>True if the move is valid, false otherwise</returns>
+        protected abstract bool IsValidMove(Move move);
     }
 }

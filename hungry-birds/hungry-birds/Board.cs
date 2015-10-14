@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace hungry_birds
 {
@@ -12,16 +13,17 @@ namespace hungry_birds
         public const int NUM_CELLS = NUM_ROWS * NUM_COLS;
         public const int NUM_BIRDS = 4;
 
-        readonly string _rowSeperator;
-        readonly string _headerString;
-        public readonly Position INITIA_LARVA_POS = new Position(6, 3);
-        public readonly Position[] INITAL_BIRD_POS =
+        public static readonly Position INITIA_LARVA_POS = new Position(6, 3);
+        public static readonly Position[] INITAL_BIRD_POS =
         {
             new Position(7, 0),
             new Position(7, 2),
             new Position(7, 4),
             new Position(7, 6)
         };
+
+        readonly string _rowSeperator;
+        readonly string _headerString;
 
         GamePiece[] _data = new GamePiece[NUM_ROWS * NUM_COLS];
 
@@ -66,6 +68,11 @@ namespace hungry_birds
             return _data[pos.Row * NUM_COLS + pos.Col];
         }
 
+        public bool IsCellEmpty(Position pos)
+        {
+            return GetCell(pos) == null;
+        }
+
         public bool IsValidPosition(Position pos)
         {
             return IsPositionInMap(pos);
@@ -84,7 +91,7 @@ namespace hungry_birds
         /// <returns>A string representation of the board</returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.AppendLine(_headerString);
             sb.AppendLine(_rowSeperator);
@@ -125,7 +132,7 @@ namespace hungry_birds
         // Gets the appropriate string to be placed between rows
         private string GetRowSeperator()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             int extraSpace = NUM_ROWS.ToString().Length;
 
@@ -141,7 +148,7 @@ namespace hungry_birds
         // Gets the header string for the board (i.e. A B C...)
         private string GetHeaderString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             int extraSpace = NUM_ROWS.ToString().Length;
 

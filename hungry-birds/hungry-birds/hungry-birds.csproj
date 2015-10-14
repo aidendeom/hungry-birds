@@ -51,6 +51,8 @@
     <Compile Include="InvalidMoveException.cs" />
     <Compile Include="Larva.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

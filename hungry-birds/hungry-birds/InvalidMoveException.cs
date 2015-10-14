@@ -7,15 +7,13 @@ namespace hungry_birds
     /// </summary>
     class InvalidMoveException : Exception
     {
-        public MoveDirection Direction { get; set; }
-
         /// <summary>
         /// Default constructor
         /// </summary>
-        public InvalidMoveException(MoveDirection direction)
-            : base($"You can't move in direction {direction}")
-        {
-            Direction = direction;
-        }
+        public InvalidMoveException() { }
+
+        public InvalidMoveException(string message)
+            : base(message)
+        { }
     }
 }
