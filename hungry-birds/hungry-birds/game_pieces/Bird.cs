@@ -28,7 +28,13 @@ namespace hungry_birds
 
         protected override bool IsValidMove(Move move)
         {
-            return _board.IsValidPosition(move.To)
+            var rowDiff = move.To.Row - Pos.Row;
+            var colDiff = Math.Abs(Pos.Col - move.To.Col);
+
+            bool canDoMove = rowDiff == -1 && colDiff == 1;
+
+            return canDoMove
+                && _board.IsValidPosition(move.To)
                 && _board.IsCellEmpty(move.To);
         }
     }

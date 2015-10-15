@@ -33,9 +33,9 @@ namespace hungry_birds
             var rowDiff = Math.Abs(Pos.Row - move.To.Row);
             var colDiff = Math.Abs(Pos.Col - move.To.Col);
 
-            var onlyOne = rowDiff == 1 && colDiff == 1;
+            var canDoMove = rowDiff == 1 && colDiff == 1;
 
-            return onlyOne
+            return canDoMove
                 && _board.IsValidPosition(move.To)
                 && _board.IsCellEmpty(move.To);
         }
