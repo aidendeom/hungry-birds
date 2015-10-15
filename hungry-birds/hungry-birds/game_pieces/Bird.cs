@@ -24,6 +24,8 @@ namespace hungry_birds
                 throw new InvalidMoveException();
 
             _board.Move(move);
+
+            Pos = move.To;
         }
 
         protected override bool IsValidMove(Move move)
