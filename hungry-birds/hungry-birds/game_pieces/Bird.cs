@@ -18,6 +18,11 @@ namespace hungry_birds
             _representation = representation;
         }
 
+        /// <summary>
+        /// Move this piece with by the provided move. If the move is invalid,
+        /// it will throw an InvalidMoveException
+        /// </summary>
+        /// <param name="move">The move to make</param>
         public override void Move(Move move)
         {
             if (!IsValidMove(move))
@@ -26,6 +31,15 @@ namespace hungry_birds
             _board.Move(move);
 
             Pos = move.To;
+        }
+
+        public override bool CanMove()
+        {
+            var upLeft = new Position(Pos.Row - 1, Pos.Col - 1);
+            var upRight = new Position(Pos.Row - 1, Pos.Col + 1);
+
+            return _board.IsCellEmpty(upLeft)
+                || _board.IsCellEmpty(upRight);
         }
 
         protected override bool IsValidMove(Move move)

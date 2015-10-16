@@ -95,16 +95,27 @@ namespace hungry_birds
         /// </returns>
         public GameState CheckForWinner()
         {
+            var birdsCanMove = false;
+
             // Check if any bird has captured the larva
             foreach (var bird in Birds)
             {
+                // Also check that at least one bird can move
+                birdsCanMove |= bird.CanMove();
+
                 if (bird.Pos == Larva.Pos)
                     return GameState.BirdWin;
             }
 
+            if (!birdsCanMove)
+                return GameState.LarvaWin;
+
             // Check if the larva is in winning row
             if (Larva.Pos.Row == NUM_ROWS - 1)
                 return GameState.LarvaWin;
+
+            if (!Larva.CanMove())
+                return GameState.BirdWin;
 
             // No winner yet
             return GameState.Running;

@@ -28,6 +28,19 @@ namespace hungry_birds
             Pos = move.To;
         }
 
+        public override bool CanMove()
+        {
+            var upLeft = new Position(Pos.Row - 1, Pos.Col - 1);
+            var upRight = new Position(Pos.Row - 1, Pos.Col + 1);
+            var downLeft = new Position(Pos.Row + 1, Pos.Col - 1);
+            var downRight = new Position(Pos.Row + 1, Pos.Col + 1);
+
+            return _board.IsCellEmpty(upLeft)
+                || _board.IsCellEmpty(upRight)
+                || _board.IsCellEmpty(downLeft)
+                || _board.IsCellEmpty(downRight);
+        }
+
         protected override bool IsValidMove(Move move)
         {
             var rowDiff = Math.Abs(Pos.Row - move.To.Row);

@@ -35,6 +35,14 @@
         public abstract void Move(Move move);
 
         /// <summary>
+        /// Returns whether or not the piece has a valid move to make
+        /// </summary>
+        /// <returns>
+        /// True if the piece can make a valid move, false otherwise.
+        /// </returns>
+        public abstract bool CanMove();
+
+        /// <summary>
         /// Check if the given move is valid
         /// </summary>
         /// <param name="move">Move to check</param>
