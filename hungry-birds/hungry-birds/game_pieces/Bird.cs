@@ -10,7 +10,7 @@ namespace hungry_birds
         /// <summary>
         /// Character representation of a Bird
         /// </summary>
-        public override char CharRepresentation => _representation;
+        public override char CharRepresentation => 'B';
 
         public Bird(Position pos, Board b, char representation)
             : base(pos, b)
@@ -33,11 +33,14 @@ namespace hungry_birds
             var rowDiff = move.To.Row - Pos.Row;
             var colDiff = Math.Abs(Pos.Col - move.To.Col);
 
-            bool canDoMove = rowDiff == -1 && colDiff == 1;
+            bool isUpperDiag = rowDiff == -1 && colDiff == 1;
 
-            return canDoMove
-                && _board.IsValidPosition(move.To)
-                && _board.IsCellEmpty(move.To);
+            var piece = _board.GetCell(move.To);
+            var emptyOrLarva = piece == null || piece is Larva;
+
+            return isUpperDiag
+                && emptyOrLarva
+                && _board.IsValidPosition(move.To);
         }
     }
 }

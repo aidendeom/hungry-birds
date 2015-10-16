@@ -3,6 +3,14 @@ using System.Diagnostics;
 
 namespace hungry_birds
 {
+    public enum GameState
+    {
+        Running,
+        LarvaWin,
+        BirdWin
+    }
+        
+
     public class Game
     {
         private Board _board = null;
@@ -30,16 +38,20 @@ namespace hungry_birds
         }
 
         /// <summary>
-        /// Start the game
+        /// Run the game
         /// </summary>
-        public void StartGame()
+        public void PlayGame()
         {
-            while (true)
+            var state = GameState.Running;
+            while (state == GameState.Running)
             {
                 UpdateScreen();
                 _currentPlayer.DoMove();
                 NextPlayer();
+                state = _board.CheckForWinner();
             }
+            UpdateScreen();
+            DisplayWinner(state);
         }
 
         private void UpdateScreen()
@@ -59,6 +71,26 @@ namespace hungry_birds
                 _currentPlayer = _player2;
             else
                 _currentPlayer = _player1;
+        }
+
+        private void DisplayWinner(GameState winner)
+        {
+            string message;
+
+            switch (winner)
+            {
+                case GameState.BirdWin:
+                    message = "Birds win!";
+                    break;
+                case GameState.LarvaWin:
+                    message = "Larva wins!";
+                    break;
+                default:
+                    message = "Game's over, no winner... what?";
+                    break;
+            }
+
+            Console.WriteLine(message);
         }
     }
 }

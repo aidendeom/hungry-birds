@@ -86,6 +86,31 @@ namespace hungry_birds
         }
 
         /// <summary>
+        /// Check the state of the board - Is there a winner?
+        /// </summary>
+        /// <returns>
+        ///     LarvaWin if larva is in winning row
+        ///     BirdWin if the birds have eaten the larva
+        ///     Running if no winner
+        /// </returns>
+        public GameState CheckForWinner()
+        {
+            // Check if any bird has captured the larva
+            foreach (var bird in Birds)
+            {
+                if (bird.Pos == Larva.Pos)
+                    return GameState.BirdWin;
+            }
+
+            // Check if the larva is in winning row
+            if (Larva.Pos.Row == NUM_ROWS - 1)
+                return GameState.LarvaWin;
+
+            // No winner yet
+            return GameState.Running;
+        }
+
+        /// <summary>
         /// Get a string representation of the board.
         /// </summary>
         /// <returns>A string representation of the board</returns>

@@ -7,6 +7,6 @@ class Driver
     {
         var game = new Game();
 
-        game.StartGame();
+        game.PlayGame();
     }
 }
