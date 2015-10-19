@@ -10,7 +10,7 @@ namespace hungry_birds
         /// <summary>
         /// Character representation of a Bird
         /// </summary>
-        public override char CharRepresentation => 'B';
+        public override char CharRepresentation { get { return 'B'; } }
 
         public Bird(Position pos, Board b, char representation)
             : base(pos, b)

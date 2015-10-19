@@ -11,6 +11,7 @@ namespace hungry_birds
         public Position To { get; private set; }
 
         public Move(Position from, Position to)
+            : this()
         {
             From = from;
             To = to;

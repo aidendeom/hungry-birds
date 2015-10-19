@@ -7,7 +7,7 @@ namespace hungry_birds
         /// <summary>
         /// Character representation of a Larva
         /// </summary>
-        public override char CharRepresentation => 'L';
+        public override char CharRepresentation { get { return 'L'; } }
 
         /// <summary>
         /// Create a new Larva peice on Board b at Position p
