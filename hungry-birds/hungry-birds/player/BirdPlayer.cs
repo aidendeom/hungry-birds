@@ -34,13 +34,17 @@ namespace hungry_birds
 
         private Move GetMove()
         {
-            string input = Console.In.ReadLine();
-            string[] coords = input.Split(SEPERATORS);
+            try
+            {
+                string input = Console.In.ReadLine();
+                string[] coords = input.Split(SEPERATORS);
 
-            var from = Position.MakePositionFromCoord(coords[0]);
-            var to = Position.MakePositionFromCoord(coords[1]);
+                var from = Position.MakePositionFromCoord(coords[0]);
+                var to = Position.MakePositionFromCoord(coords[1]);
 
-            return new Move(from, to);
+                return new Move(from, to);
+            }
+            catch (Exception) { throw new InvalidMoveException(); }
         }
 
         private Bird GetBirdToMove(Move move)
