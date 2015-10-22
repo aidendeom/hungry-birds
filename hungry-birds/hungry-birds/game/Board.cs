@@ -13,8 +13,8 @@ namespace hungry_birds
         public const int NUM_CELLS = NUM_ROWS * NUM_COLS;
         public const int NUM_BIRDS = 4;
 
-        public static readonly Position INITIA_LARVA_POS = new Position(6, 3);
-        public static readonly Position[] INITAL_BIRD_POS =
+        public static readonly Position INITIAL_LARVA_POS = new Position(6, 3);
+        public static readonly Position[] INITIAL_BIRD_POS =
         {
             new Position(7, 0),
             new Position(7, 2),
@@ -39,13 +39,13 @@ namespace hungry_birds
             _rowSeperator = GetRowSeperator();
             _headerString = GetHeaderString();
 
-            Larva = new Larva(INITIA_LARVA_POS, this);
+            Larva = new Larva(INITIAL_LARVA_POS, this);
             SetCell(Larva.Pos, Larva);
 
             Birds = new Bird[NUM_BIRDS];
             for (int i = 0; i < NUM_BIRDS; i++)
             {
-                Position pos = INITAL_BIRD_POS[i];
+                Position pos = INITIAL_BIRD_POS[i];
                 char representation = (char)('0' + i + 1);
                 Birds[i] = new Bird(pos, this, representation);
                 SetCell(pos, Birds[i]);
@@ -70,6 +70,9 @@ namespace hungry_birds
 
         public bool IsCellEmpty(Position pos)
         {
+            //if (!IsPositionInMap(pos))
+            //    throw new ArgumentException(); // Needs to be fixed and tested, throws exception on first input for larva
+
             return GetCell(pos) == null;
         }
 

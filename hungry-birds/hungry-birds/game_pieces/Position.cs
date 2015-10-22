@@ -1,4 +1,6 @@
-﻿namespace hungry_birds
+﻿using System;
+
+namespace hungry_birds
 {
     /// <summary>
     /// Struct to represent a position on a board
@@ -25,20 +27,24 @@
         /// <returns>A position on a board</returns>
         public static Position MakePositionFromCoord(string coord)
         {
-            coord = coord.ToLower();
-            char cCol = coord[0];
-            char cRow = coord[1];
+            try
+            {
+                coord = coord.ToLower();
+                char cCol = coord[0];
+                char cRow = coord[1];
 
-            int col = cCol - 'a';
+                int col = cCol - 'a';
 
-            // We must do it this way because the way the board is presented to
-            // the player is upside-down compared to how it is stored in data.
-            // For example, row 1 in data is actually 7 on the board (assuming
-            // the board has 8 rows total.
-            char startingChar = (char)(Board.NUM_ROWS + '0');
-            int row = startingChar - cRow;
+                // We must do it this way because the way the board is presented to
+                // the player is upside-down compared to how it is stored in data.
+                // For example, row 1 in data is actually 7 on the board (assuming
+                // the board has 8 rows total.
+                char startingChar = (char)(Board.NUM_ROWS + '0');
+                int row = startingChar - cRow;
 
-            return new Position(row, col);
+                return new Position(row, col);
+            }
+            catch (Exception) { throw new InvalidMoveException(); }
         }
 
         public override bool Equals(object obj)
