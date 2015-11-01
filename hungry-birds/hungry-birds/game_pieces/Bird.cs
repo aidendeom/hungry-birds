@@ -4,19 +4,14 @@ namespace hungry_birds
 {
     public class Bird : GamePiece
     {
-        // Allow for different representations to differentiate on the board;
-        private char _representation = 'B';
-
         /// <summary>
         /// Character representation of a Bird
         /// </summary>
         public override char CharRepresentation { get { return 'B'; } }
 
-        public Bird(Position pos, Board b, char representation)
+        public Bird(Position pos, Board b)
             : base(pos, b)
-        {
-            _representation = representation;
-        }
+        { }
 
         /// <summary>
         /// Move this piece with by the provided move. If the move is invalid,
@@ -38,8 +33,8 @@ namespace hungry_birds
             var upLeft = new Position(Pos.Row - 1, Pos.Col - 1);
             var upRight = new Position(Pos.Row - 1, Pos.Col + 1);
 
-            return _board.IsCellEmpty(upLeft)
-                || _board.IsCellEmpty(upRight);
+            return _board.IsValidPosition(upLeft) && _board.IsCellEmpty(upLeft)
+                || _board.IsValidPosition(upRight) &&_board.IsCellEmpty(upRight);
         }
 
         protected override bool IsValidMove(Move move)

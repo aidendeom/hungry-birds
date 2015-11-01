@@ -46,8 +46,7 @@ namespace hungry_birds
             for (int i = 0; i < NUM_BIRDS; i++)
             {
                 Position pos = INITIAL_BIRD_POS[i];
-                char representation = (char)('0' + i + 1);
-                Birds[i] = new Bird(pos, this, representation);
+                Birds[i] = new Bird(pos, this);
                 SetCell(pos, Birds[i]);
             }
         }
@@ -70,8 +69,8 @@ namespace hungry_birds
 
         public bool IsCellEmpty(Position pos)
         {
-            //if (!IsPositionInMap(pos))
-            //    throw new ArgumentException(); // Needs to be fixed and tested, throws exception on first input for larva
+            if (!IsPositionInMap(pos))
+                throw new ArgumentException();
 
             return GetCell(pos) == null;
         }

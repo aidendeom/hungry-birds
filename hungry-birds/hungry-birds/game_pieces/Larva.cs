@@ -35,10 +35,10 @@ namespace hungry_birds
             var downLeft = new Position(Pos.Row + 1, Pos.Col - 1);
             var downRight = new Position(Pos.Row + 1, Pos.Col + 1);
 
-            return _board.IsCellEmpty(upLeft)
-                || _board.IsCellEmpty(upRight)
-                || _board.IsCellEmpty(downLeft)
-                || _board.IsCellEmpty(downRight);
+            return _board.IsValidPosition(upLeft) && _board.IsCellEmpty(upLeft)
+                || _board.IsValidPosition(upRight) && _board.IsCellEmpty(upRight)
+                || _board.IsValidPosition(downLeft) && _board.IsCellEmpty(downLeft)
+                || _board.IsValidPosition(downRight) && _board.IsCellEmpty(downRight);
         }
 
         protected override bool IsValidMove(Move move)
