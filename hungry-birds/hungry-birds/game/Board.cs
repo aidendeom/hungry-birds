@@ -121,6 +121,25 @@ namespace hungry_birds
             return GameState.Running;
         }
 
+        // Evaluate the current state using the naive heuristic we were given
+        public int EvaluateHeuristic()
+        {
+            int larvaScore = GetScoreForPos(Larva.Pos);
+            int birdScore = 0;
+
+            foreach (var b in Birds)
+            {
+                birdScore += GetScoreForPos(b.Pos);
+            }
+
+            return larvaScore - birdScore;
+        }
+
+        private int GetScoreForPos(Position pos)
+        {
+            return (pos.Row) * 8 + pos.Col + 1;
+        }
+
         /// <summary>
         /// Get a string representation of the board.
         /// </summary>

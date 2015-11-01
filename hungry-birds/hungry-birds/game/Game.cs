@@ -58,6 +58,7 @@ namespace hungry_birds
         {
             Console.Clear();
             Console.WriteLine(_board);
+            Console.WriteLine(string.Format("Current Score: {0}", _board.EvaluateHeuristic()));
         }
 
         /// <summary>
