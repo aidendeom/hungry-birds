@@ -34,7 +34,7 @@ namespace hungry_birds
             var upRight = new Position(Pos.Row - 1, Pos.Col + 1);
 
             return _board.IsValidPosition(upLeft) && _board.IsCellEmpty(upLeft)
-                || _board.IsValidPosition(upRight) &&_board.IsCellEmpty(upRight);
+                || _board.IsValidPosition(upRight) && _board.IsCellEmpty(upRight);
         }
 
         protected override bool IsValidMove(Move move)
