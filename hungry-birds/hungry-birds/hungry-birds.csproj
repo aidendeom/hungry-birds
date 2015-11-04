@@ -44,10 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="game_pieces\BCTree.cs" />
     <Compile Include="game_pieces\Bird.cs" />
     <Compile Include="game\Board.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="game\Game.cs" />
+    <Compile Include="game_pieces\BoardConfig.cs" />
     <Compile Include="game_pieces\GamePiece.cs" />
     <Compile Include="game\InvalidMoveException.cs" />
     <Compile Include="player\IPlayer.cs" />

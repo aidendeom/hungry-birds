@@ -46,7 +46,19 @@ namespace hungry_birds
             while (state == GameState.Running)
             {
                 UpdateScreen();
-                _currentPlayer.DoMove();
+                if (_currentPlayer.GetType().Name.Equals("LarvaPlayer") && Driver.AI.Equals("l"))
+                {
+                    _board.AILavaMove();
+                    _currentPlayer.DoMove(); // remove
+                }
+                else if (_currentPlayer.GetType().Name.Equals("BirdPlayer") && Driver.AI.Equals("b"))
+                {
+
+                }
+                else
+                {
+                    _currentPlayer.DoMove();
+                }
                 NextPlayer();
                 state = _board.CheckForWinner();
             }
