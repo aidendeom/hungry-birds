@@ -36,5 +36,36 @@ namespace hungry_birds
             Bird3Pos = bc.Bird3Pos;
             Bird4Pos = bc.Bird4Pos;
         }
+
+        private int GetScoreForPos(Position pos)
+        {
+            return (pos.Row) * 8 + pos.Col + 1;
+        }
+
+        // TODO make array of bird positions instead of separate variables
+        public bool IsCellEmpty(Position pos)
+        {
+            int posScore = GetScoreForPos(pos);
+            int larvaPosScore = GetScoreForPos(LarvaPos);
+            int bird1PosScore = GetScoreForPos(Bird1Pos);
+            int bird2PosScore = GetScoreForPos(Bird2Pos);
+            int bird3PosScore = GetScoreForPos(Bird3Pos);
+            int bird4PosScore = GetScoreForPos(Bird4Pos);
+
+            if ((posScore == larvaPosScore) || (posScore == bird1PosScore) || (posScore == bird2PosScore) || (posScore == bird3PosScore) || (posScore == bird4PosScore))
+                return false;
+            return true;
+        }
+
+        public int EvaluateBCHeuristic()
+        {
+            int larvaPosScore = GetScoreForPos(LarvaPos);
+            int bird1PosScore = GetScoreForPos(Bird1Pos);
+            int bird2PosScore = GetScoreForPos(Bird2Pos);
+            int bird3PosScore = GetScoreForPos(Bird3Pos);
+            int bird4PosScore = GetScoreForPos(Bird4Pos);
+
+            return larvaPosScore - (bird1PosScore + bird2PosScore + bird3PosScore + bird4PosScore);
+        }
     }
 }

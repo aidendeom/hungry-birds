@@ -9,20 +9,46 @@ namespace hungry_birds
     /// <typeparam name="BoardConfig">Parameter of collection</typeparam>
     class BCTree<BoardConfig>
     {
-        private BoardConfig data;
-        public LinkedList<BCTree<BoardConfig>> children { get; set; }
+        public BoardConfig data { get; set; }
+        public BCTree<BoardConfig> parent { get; set; }
+        public List<BCTree<BoardConfig>> children { get; set; }
+
+        public Boolean isRoot
+        {
+            get {return parent == null;}
+        }
+
+        public Boolean isLeaf
+        {
+            get { return children.Count == 0; }
+        }
+
+        public int Level
+        {
+            get
+            {
+                if (this.isRoot)
+                    return 0;
+                return parent.Level + 1;
+            }
+        }
 
         public BCTree(BoardConfig data)
         {
             this.data = data;
-            children = new LinkedList<BCTree<BoardConfig>>();
+            children = new List<BCTree<BoardConfig>>();
+            
             // count = 1;
         }
 
-        public void AddChild(BoardConfig child)
+        public BCTree<BoardConfig> AddChild(BoardConfig child)
         {
-            children.AddFirst(new BCTree<BoardConfig>(child));
+            BCTree<BoardConfig> childNode = new BCTree<BoardConfig>(child) { parent = this };
+            this.children.Add(childNode);
+            // children.AddFirst(new BCTree<BoardConfig>(child));
             // count++;
+
+            return childNode;
         }
 
         public BCTree<BoardConfig> GetChild(int i)
@@ -44,3 +70,4 @@ namespace hungry_birds
     }
 }
 // reference - http://stackoverflow.com/questions/66893/tree-data-structure-in-c-sharp
+// reference - https://code.google.com/p/yet-another-tree-structure/
