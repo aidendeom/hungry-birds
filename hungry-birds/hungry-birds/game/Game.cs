@@ -48,12 +48,15 @@ namespace hungry_birds
                 UpdateScreen();
                 if (_currentPlayer.GetType().Name.Equals("LarvaPlayer") && Driver.AI.Equals("l"))
                 {
-                    _board.AILavaMove();
-                    _currentPlayer.DoMove(); // remove
+                    BoardConfig nextConfig = _board.AILarvaMove();
+                    // _currentPlayer.DoMove(); // TODO remove
+                    _currentPlayer.DoAIMove(nextConfig); // Comment this and uncomment previous line to see heuristic but do the move yourself
                 }
                 else if (_currentPlayer.GetType().Name.Equals("BirdPlayer") && Driver.AI.Equals("b"))
                 {
-
+                    BoardConfig nextConfig = _board.AIBirdsMove();
+                    // _currentPlayer.DoMove(); // TODO remove
+                    _currentPlayer.DoAIMove(nextConfig); // Comment this and uncomment previous line to see heuristic but do the move yourself
                 }
                 else
                 {

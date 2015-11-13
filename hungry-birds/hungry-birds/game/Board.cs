@@ -364,9 +364,9 @@ namespace hungry_birds
             }
         }
 
-        private Position getBestLarvaMove(List<BCTree<BoardConfig>> level1Nodes, ref BCTree<BoardConfig> rootNode)
+        private BoardConfig getBestMove(List<BCTree<BoardConfig>> level1Nodes, ref BCTree<BoardConfig> rootNode)
         {
-            // Calculate MAX of children and place it in root, as well as return position of MAX child
+            // Calculate MAX of children and place it in root, as well as return Board Configuration of MAX child
             if (rootNode.isLeaf)
             {
                 BoardConfig tempBC = new BoardConfig(rootNode.data);
@@ -374,7 +374,7 @@ namespace hungry_birds
                 tempBC.heuristic = tempHeuristic;
                 rootNode.data = tempBC;
                 Console.WriteLine("Root is a leaf");
-                return rootNode.data.LarvaPos;
+                return rootNode.data;
             }
             else
             {
@@ -389,11 +389,54 @@ namespace hungry_birds
                         MAXConfig = rootNode.children[i].data;
                     }
                 }
-                return MAXConfig.LarvaPos;
+                return MAXConfig;
             }
         }
 
-        public void AILavaMove()
+        private int getBirdToMove(BoardConfig bestMove, BoardConfig origBC)
+        {
+            // Find which bird should move
+            if (!(origBC.Bird1Pos.Equals(bestMove.Bird1Pos)))
+            {
+                return 1;
+            }
+            else if (!(origBC.Bird2Pos.Equals(bestMove.Bird2Pos)))
+            {
+                return 2;
+            }
+            else if (!(origBC.Bird3Pos.Equals(bestMove.Bird3Pos)))
+            {
+                return 3;
+            }
+            else if (!(origBC.Bird4Pos.Equals(bestMove.Bird4Pos)))
+            {
+                return 4;
+            }
+            return -1;
+        }
+
+        private Position getNextBirdPosition(int i, BoardConfig nextConfig)
+        {
+            if (i == 1)
+            {
+                return nextConfig.Bird1Pos;
+            }
+            else if (i == 2)
+            {
+                return nextConfig.Bird2Pos;
+            }
+            else if (i == 3)
+            {
+                return nextConfig.Bird3Pos;
+            }
+            else if (i == 4)
+            {
+                return nextConfig.Bird4Pos;
+            }
+            return new Position(); // TODO better return value
+        }
+
+        public BoardConfig AILarvaMove()
         {
             // Get original positions
             Position origLarvaPosition = Larva.Pos;
@@ -474,9 +517,95 @@ namespace hungry_birds
 
             Console.WriteLine("Calculating best move for Larva...");
 
-            Position nextLarvaPosition = getBestLarvaMove(level1Nodes, ref MiniMaxTree);
+            BoardConfig nextConfig = getBestMove(level1Nodes, ref MiniMaxTree);
+
+            Position nextLarvaPosition = nextConfig.LarvaPos;
 
             Console.WriteLine("The best next move for the Larva is to go to position " + GetScoreForPos(nextLarvaPosition));
+
+            return nextConfig;
+        }
+
+        public BoardConfig AIBirdsMove()
+        {
+            // Get original positions
+            Position origLarvaPosition = Larva.Pos;
+            Position origBird1Position = Birds[0].Pos;
+            Position origBird2Position = Birds[1].Pos;
+            Position origBird3Position = Birds[2].Pos;
+            Position origBird4Position = Birds[3].Pos;
+            BoardConfig origBC = new BoardConfig(0, origLarvaPosition, origBird1Position, origBird2Position, origBird3Position, origBird4Position);
+
+            // TODO change name to rootTree or like
+            BCTree<BoardConfig> MiniMaxTree = new BCTree<BoardConfig>(origBC);
+
+            // Get level 1 kids for the Birds
+            generateBirdsChildren(ref MiniMaxTree, 1);
+
+            List<BCTree<BoardConfig>> level1Nodes = new List<BCTree<BoardConfig>>();
+            drill(MiniMaxTree, 0, 1, ref level1Nodes);
+            Console.WriteLine("Count of nodes at Level 1 given by drill method = " + level1Nodes.Count);
+
+            // Get level 2 kids for the Larva
+            for(int i = 0; i < level1Nodes.Count; ++i)
+            {
+                var temp = level1Nodes[i];
+                generateLarvaChildren(ref temp, 2);
+            }
+
+            List<BCTree<BoardConfig>> level2Nodes = new List<BCTree<BoardConfig>>();
+            drill(MiniMaxTree, 0, 2, ref level2Nodes);
+            Console.WriteLine("Count of nodes at Level 2 given by drill method = " + level2Nodes.Count);
+
+            // Get level 3 kids for the Birds
+            for(int i = 0; i < level2Nodes.Count; ++i)
+            {
+                var temp = level2Nodes[i];
+                generateBirdsChildren(ref temp, 3);
+            }
+
+            List<BCTree<BoardConfig>> level3Nodes = new List<BCTree<BoardConfig>>();
+            drill(MiniMaxTree, 0, 3, ref level3Nodes);
+            Console.WriteLine("Count of nodes at Level 3 given by drill method = " + level3Nodes.Count);
+
+            Console.WriteLine("Calculating level 3 heuristics...");
+
+            calculateLevelHeuristics(ref level3Nodes);
+            
+            for (int i = 0; i < level3Nodes.Count; i++)
+            {
+                Console.WriteLine(i + " " + level3Nodes[i].data.heuristic);
+            }
+
+            Console.WriteLine("Calculating level 2 heuristics...");
+
+            calculateLevelHeuristics(ref level2Nodes);
+
+            for (int i = 0; i < level2Nodes.Count; i++)
+            {
+                Console.WriteLine(i + " " + level2Nodes[i].data.heuristic);
+            }
+
+            Console.WriteLine("Calculating level 1 heuristics...");
+
+            calculateLevelHeuristics(ref level1Nodes);
+
+            for (int i = 0; i < level1Nodes.Count; i++)
+            {
+                Console.WriteLine(i + " " + level1Nodes[i].data.heuristic);
+            }
+
+            Console.WriteLine("Calculating best move for Birds...");
+
+            BoardConfig nextConfig = getBestMove(level1Nodes, ref MiniMaxTree);
+
+            int birdToMove = getBirdToMove(nextConfig, origBC);
+
+            Position nextBirdPosition = getNextBirdPosition(birdToMove, nextConfig);
+
+            Console.WriteLine("The best next move for the Birds is for Bird " + birdToMove + " to go to position " + GetScoreForPos(nextBirdPosition));
+
+            return nextConfig;
         }
 
         /// <summary>

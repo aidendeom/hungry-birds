@@ -37,6 +37,16 @@ namespace hungry_birds
             }
         }
 
+        // TODO REMOVE!
+        public void DoAIMove(BoardConfig bc)
+        {
+            try
+            {
+                _larva.Move(new Move(_larva.Pos, bc.LarvaPos));
+            }
+            catch (InvalidMoveException) { }
+        }
+
         private Move GetMove()
         {
             // Should read a input string. e.g. e1
