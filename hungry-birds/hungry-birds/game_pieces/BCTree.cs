@@ -7,7 +7,7 @@ namespace hungry_birds
     /// Class to store BoardConfig in a tree structure to implement minimax algorithm
     /// </summary>
     /// <typeparam name="BoardConfig">Parameter of collection</typeparam>
-    class BCTree<BoardConfig>
+    public class BCTree<BoardConfig>
     {
         public BoardConfig data { get; set; }
         public BCTree<BoardConfig> parent { get; set; }

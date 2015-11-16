@@ -58,6 +58,7 @@
     <Compile Include="game\Move.cs" />
     <Compile Include="player\BirdPlayer.cs" />
     <Compile Include="game_pieces\Position.cs" />
+    <Compile Include="player\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

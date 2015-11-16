@@ -3,7 +3,6 @@
     public interface IPlayer
     {
         void DoMove();
-        // TODO REMOVE!
-        void DoAIMove(BoardConfig bc);
+        void DoAIMove(Larva Larva, Bird[] Birds, Board Board);
     }
 }

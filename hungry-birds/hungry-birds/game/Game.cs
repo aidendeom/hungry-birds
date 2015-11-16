@@ -48,15 +48,15 @@ namespace hungry_birds
                 UpdateScreen();
                 if (_currentPlayer.GetType().Name.Equals("LarvaPlayer") && Driver.AI.Equals("l"))
                 {
-                    BoardConfig nextConfig = _board.AILarvaMove();
+                    // BoardConfig nextConfig = _board.AILarvaMove();
                     // _currentPlayer.DoMove(); // TODO remove
-                    _currentPlayer.DoAIMove(nextConfig); // Comment this and uncomment previous line to see heuristic but do the move yourself
+                    _currentPlayer.DoAIMove(_larva, _birds, _board); // Comment this and uncomment previous line to see heuristic but do the move yourself
                 }
                 else if (_currentPlayer.GetType().Name.Equals("BirdPlayer") && Driver.AI.Equals("b"))
                 {
-                    BoardConfig nextConfig = _board.AIBirdsMove();
+                    // BoardConfig nextConfig = _board.AIBirdsMove();
                     // _currentPlayer.DoMove(); // TODO remove
-                    _currentPlayer.DoAIMove(nextConfig); // Comment this and uncomment previous line to see heuristic but do the move yourself
+                    _currentPlayer.DoAIMove(_larva, _birds, _board); // Comment this and uncomment previous line to see heuristic but do the move yourself
                 }
                 else
                 {
@@ -67,11 +67,12 @@ namespace hungry_birds
             }
             UpdateScreen();
             DisplayWinner(state);
+            System.Threading.Thread.Sleep(10000); // TODO NOT EXIT after winner is declared
         }
 
         private void UpdateScreen()
         {
-            Console.Clear();
+            // Console.Clear();
             Console.WriteLine(_board);
             Console.WriteLine(string.Format("Current Score: {0}", _board.EvaluateHeuristic()));
         }

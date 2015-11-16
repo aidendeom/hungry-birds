@@ -9,21 +9,19 @@ namespace hungry_birds
     {
         public int Level { get; set; }
         public Position LarvaPos { get; set; }
-        public Position Bird1Pos { get; set; }
-        public Position Bird2Pos { get; set; }
-        public Position Bird3Pos { get; set; }
-        public Position Bird4Pos { get; set; }
+        public Position[] BirdsPos { get; set; }
         public int heuristic { get; set; }
         
-        public BoardConfig (int l, Position lp, Position b1, Position b2, Position b3, Position b4)
+        public BoardConfig(int l, Position lp, Position[] BsP)
             : this()
         {
             Level = l;
             LarvaPos = lp;
-            Bird1Pos = b1;
-            Bird2Pos = b2;
-            Bird3Pos = b3;
-            Bird4Pos = b4;
+            BirdsPos = new Position[BsP.Length];
+            for (int i = 0; i < BirdsPos.Length; ++i)
+            {
+                BirdsPos[i] = BsP[i];
+            }
         }
 
         public BoardConfig (BoardConfig bc)
@@ -31,10 +29,11 @@ namespace hungry_birds
         {
             Level = bc.Level;
             LarvaPos = bc.LarvaPos;
-            Bird1Pos = bc.Bird1Pos;
-            Bird2Pos = bc.Bird2Pos;
-            Bird3Pos = bc.Bird3Pos;
-            Bird4Pos = bc.Bird4Pos;
+            BirdsPos = new Position[bc.BirdsPos.Length];
+            for (int i = 0; i < bc.BirdsPos.Length; ++i)
+            {
+                this.BirdsPos[i] = bc.BirdsPos[i];
+            }
         }
 
         private int GetScoreForPos(Position pos)
@@ -42,30 +41,34 @@ namespace hungry_birds
             return (pos.Row) * 8 + pos.Col + 1;
         }
 
-        // TODO make array of bird positions instead of separate variables
         public bool IsCellEmpty(Position pos)
         {
             int posScore = GetScoreForPos(pos);
             int larvaPosScore = GetScoreForPos(LarvaPos);
-            int bird1PosScore = GetScoreForPos(Bird1Pos);
-            int bird2PosScore = GetScoreForPos(Bird2Pos);
-            int bird3PosScore = GetScoreForPos(Bird3Pos);
-            int bird4PosScore = GetScoreForPos(Bird4Pos);
 
-            if ((posScore == larvaPosScore) || (posScore == bird1PosScore) || (posScore == bird2PosScore) || (posScore == bird3PosScore) || (posScore == bird4PosScore))
+            if (posScore == GetScoreForPos(LarvaPos))
                 return false;
+            
+            for (int i = 0; i < BirdsPos.Length; ++i)
+            {
+                if (posScore == GetScoreForPos(BirdsPos[i]))
+                    return false;
+            }
+
             return true;
         }
 
         public int EvaluateBCHeuristic()
         {
             int larvaPosScore = GetScoreForPos(LarvaPos);
-            int bird1PosScore = GetScoreForPos(Bird1Pos);
-            int bird2PosScore = GetScoreForPos(Bird2Pos);
-            int bird3PosScore = GetScoreForPos(Bird3Pos);
-            int bird4PosScore = GetScoreForPos(Bird4Pos);
+            int birdsScore = 0;
 
-            return larvaPosScore - (bird1PosScore + bird2PosScore + bird3PosScore + bird4PosScore);
+            for (int i = 0; i < BirdsPos.Length; ++i)
+            {
+                birdsScore += GetScoreForPos(BirdsPos[i]);
+            }
+
+            return larvaPosScore - birdsScore;
         }
     }
 }
