@@ -67,7 +67,6 @@ namespace hungry_birds
             }
             UpdateScreen();
             DisplayWinner(state);
-            System.Threading.Thread.Sleep(10000); // TODO NOT EXIT after winner is declared
         }
 
         private void UpdateScreen()

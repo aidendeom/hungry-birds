@@ -5,15 +5,14 @@ namespace hungry_birds
     /// <summary>
     /// Struct to represent the positions of pieces on a board
     /// </summary>
-    public struct BoardConfig
+    public class BoardConfig
     {
         public int Level { get; set; }
         public Position LarvaPos { get; set; }
         public Position[] BirdsPos { get; set; }
         public int heuristic { get; set; }
-        
+
         public BoardConfig(int l, Position lp, Position[] BsP)
-            : this()
         {
             Level = l;
             LarvaPos = lp;
@@ -25,14 +24,13 @@ namespace hungry_birds
         }
 
         public BoardConfig (BoardConfig bc)
-            : this()
         {
             Level = bc.Level;
             LarvaPos = bc.LarvaPos;
             BirdsPos = new Position[bc.BirdsPos.Length];
             for (int i = 0; i < bc.BirdsPos.Length; ++i)
             {
-                this.BirdsPos[i] = bc.BirdsPos[i];
+                BirdsPos[i] = bc.BirdsPos[i];
             }
         }
 
@@ -43,15 +41,12 @@ namespace hungry_birds
 
         public bool IsCellEmpty(Position pos)
         {
-            int posScore = GetScoreForPos(pos);
-            int larvaPosScore = GetScoreForPos(LarvaPos);
-
-            if (posScore == GetScoreForPos(LarvaPos))
+            if (pos == LarvaPos)
                 return false;
-            
-            for (int i = 0; i < BirdsPos.Length; ++i)
+
+            foreach (var p in BirdsPos)
             {
-                if (posScore == GetScoreForPos(BirdsPos[i]))
+                if (pos == p)
                     return false;
             }
 
