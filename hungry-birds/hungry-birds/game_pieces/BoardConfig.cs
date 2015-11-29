@@ -5,7 +5,7 @@ namespace hungry_birds
     /// <summary>
     /// Struct to represent the positions of pieces on a board
     /// </summary>
-    public class BoardConfig
+    public struct BoardConfig
     {
         public int Level { get; set; }
         public Position LarvaPos { get; set; }
@@ -13,6 +13,7 @@ namespace hungry_birds
         public int heuristic { get; set; }
 
         public BoardConfig(int l, Position lp, Position[] BsP)
+            : this()
         {
             Level = l;
             LarvaPos = lp;
@@ -24,6 +25,7 @@ namespace hungry_birds
         }
 
         public BoardConfig (BoardConfig bc)
+            : this()
         {
             Level = bc.Level;
             LarvaPos = bc.LarvaPos;
