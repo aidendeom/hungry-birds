@@ -135,7 +135,7 @@ namespace hungry_birds
             }
             Console.WriteLine();
             Console.WriteLine("Calculating best move for Larva...");
-            BoardConfig nextConfig = Utilities.getBestMove(level1Nodes, ref MiniMaxTree);
+            BoardConfig nextConfig = Utilities.getBestMove(level1Nodes, ref MiniMaxTree, true);
             Position nextLarvaPosition = nextConfig.LarvaPos;
 
             Utilities.PreOrderPrintLarva(MiniMaxTree);

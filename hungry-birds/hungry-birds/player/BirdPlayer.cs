@@ -162,7 +162,7 @@ namespace hungry_birds
             }
             Console.WriteLine();
             Console.WriteLine("Calculating best move for Birds...");
-            BoardConfig nextConfig = Utilities.getBestMove(level1Nodes, ref MiniMaxTree);
+            BoardConfig nextConfig = Utilities.getBestMove(level1Nodes, ref MiniMaxTree, false);
             int birdToMove = getBirdToMove(nextConfig, origBC);
             Position nextBirdPosition = nextConfig.BirdsPos[birdToMove];
 

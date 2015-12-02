@@ -47,6 +47,14 @@ namespace hungry_birds
             catch (Exception) { throw new InvalidMoveException(); }
         }
 
+        public static double Distance(Position p1, Position p2)
+        {
+            int dx = Math.Abs(p1.Col - p2.Col);
+            int dy = Math.Abs(p1.Row - p2.Row);
+
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)

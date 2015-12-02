@@ -140,7 +140,28 @@ namespace hungry_birds
 
         private int GetScoreForPos(Position pos)
         {
-            return (pos.Row) * 8 + pos.Col + 1;
+            /*
+ The board's score looks like the following
+
+ 1	2	3	4	4	3	2	1
+ 2	4	6	8	8	6	4	2
+ 3	6	9	12	12	9	6	3
+ 4	8	12	16	16	12	8	4
+ 5	10	15	20	20	15	10	5
+ 6	12	18	24	24	18	12	6
+ 7	14	21	28	28	21	14	7
+ 8	16	24	32	32	24	16	8
+ */
+
+
+            int rowScore = pos.Row + 1;
+
+            int dist1 = Math.Abs(pos.Col - 3);
+            int dist2 = Math.Abs(pos.Col - 4);
+            int distFromCenter = Math.Min(dist1, dist2);
+            int colScore = 4 - distFromCenter;
+
+            return rowScore * colScore;
         }
 
         /// <summary>
